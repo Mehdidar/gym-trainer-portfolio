@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shiva K. | Leads Dashboard</title>
+
+    <!-- Fonts: Inter & Outfit -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500&family=Outfit:wght@400;700;900&display=swap" rel="stylesheet">
+    
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+        }
+
+        .admin-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Sidebar */
+        .sidebar {
+            background-color: var(--card-bg);
+            border-right: 1px solid var(--border-color);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-brand {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            font-weight: 900;
+            color: var(--text-primary);
+            margin-bottom: 3rem;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 1rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: var(--transition);
+            font-weight: 500;
+        }
+
+        .nav-item i {
+            font-size: 1.5rem;
+        }
+
+        .nav-item:hover, .nav-item.active {
+            background-color: rgba(255, 74, 28, 0.1);
+            color: var(--accent-color);
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 3rem 4rem;
+            overflow-y: auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 3rem;
+            padding-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .dashboard-header h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .dashboard-header p {
+            color: var(--text-secondary);
+        }
+
+        /* Summary Cards */
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .summary-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 4px; height: 100%;
+            background-color: var(--accent-color);
+        }
+
+        .summary-value {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: var(--font-heading);
+        }
+
+        .summary-label {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* Leads Table */
+        .leads-table-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .table-header {
+            padding: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .table-header h2 {
+            font-size: 1.5rem;
+        }
+
+        .status-badge {
+            padding: 0.4rem 0.8rem;
+            border-radius: 100px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-new {
+            background: rgba(255, 74, 28, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(255, 74, 28, 0.3);
+        }
+
+        .status-contacted {
+            background: rgba(46, 204, 113, 0.1);
+            color: #2ecc71;
+            border: 1px solid rgba(46, 204, 113, 0.3);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 1.5rem 2rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            color: var(--text-secondary);
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            background: rgba(255,255,255,0.01);
+        }
+
+        td {
+            color: var(--text-primary);
+        }
+
+        .lead-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #ffffff;
+        }
+
+        .lead-email {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            border-color: var(--accent-color);
+            color: var(--accent-color);
+            background: rgba(255, 74, 28, 0.1);
+        }
+
+        .btn-refresh {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .btn-refresh:hover {
+            background: #e63e14;
+        }
+
+        /* Note on functionality */
+        .info-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(255,255,255,0.05);
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="admin-layout">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                SHIVA K.<span style="color: var(--accent-color)">//</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#" class="nav-item active">
+                    <i class="ph ph-users"></i>
+                    Client Leads
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-chart-line-up"></i>
+                    Analytics
+                </a>
+                <a href="#" class="nav-item">
+                    <i class="ph ph-gear"></i>
+                    Settings
+                </a>
+                <a href="shiva_portfolio.html" class="nav-item" style="margin-top: auto;">
+                    <i class="ph ph-arrow-left"></i>
+                    Back to Website
+                </a>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="dashboard-header">
+                <div>
+                    <h1>Leads Dashboard</h1>
+                    <p>Manage and track your incoming client inquiries.</p>
+                </div>
+                <div class="info-pill">
+                    <i class="ph ph-info"></i> Note: This is an admin UI mockup. Official leads are stored in your Netlify Dashboard.
+                </div>
+            </div>
+
+            <!-- Stats -->
+            <div class="summary-grid">
+                <div class="summary-card">
+                    <span class="summary-value">12</span>
+                    <span class="summary-label">Total Leads</span>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-value" style="color: var(--accent-color);">4</span>
+                    <span class="summary-label">New (Uncontacted)</span>
+                </div>
+                <div class="summary-card">
+                    <span class="summary-value" style="color: #2ecc71;">8</span>
+                    <span class="summary-label">Active Conversations</span>
+                </div>
+            </div>
+
+            <!-- Leads Table -->
+            <div class="leads-table-container">
+                <div class="table-header">
+                    <h2>Recent Inquiries</h2>
+                    <button class="btn-refresh"><i class="ph ph-arrows-clockwise"></i> Sync Netlify Leads</button>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Client Details</th>
+                            <th>Goal</th>
+                            <th>Date Received</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- Mock Lead 1 -->
+                        <tr>
+                            <td>
+                                <div class="lead-name">Rahul Sharma</div>
+                                <div class="lead-email">rahul.sharma@example.com <br> +91 98765 43210</div>
+                            </td>
+                            <td><strong style="color: var(--accent-color)">Fat Loss & Transformation</strong><br>Looking to drop 10kg before December.</td>
+                            <td>Today, 10:30 AM</td>
+                            <td><span class="status-badge status-new">New Lead</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="action-btn" title="Send Email"><i class="ph ph-envelope-simple"></i></button>
+                                    <button class="action-btn" title="Mark as Contacted"><i class="ph ph-check-circle"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Mock Lead 2 -->
+                        <tr>
+                            <td>
+                                <div class="lead-name">Arjun Patel</div>
+                                <div class="lead-email">a.patel.athlete@example.com <br> +91 87654 32109</div>
+                            </td>
+                            <td><strong style="color: var(--accent-color)">Athlete Training</strong><br>Need speed and vertical jump coaching for basketball.</td>
+                            <td>Yesterday, 4:15 PM</td>
+                            <td><span class="status-badge status-new">New Lead</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="action-btn" title="Send Email"><i class="ph ph-envelope-simple"></i></button>
+                                    <button class="action-btn" title="Mark as Contacted"><i class="ph ph-check-circle"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+
+                        <!-- Mock Lead 3 -->
+                        <tr>
+                            <td>
+                                <div class="lead-name">Priya Singh</div>
+                                <div class="lead-email">priya.s.fitness@example.com <br> +91 76543 21098</div>
+                            </td>
+                            <td><strong style="color: var(--accent-color)">Personal Training</strong><br>General strength building, currently dealing with back pain.</td>
+                            <td>Oct 12, 2026</td>
+                            <td><span class="status-badge status-contacted">Contacted</span></td>
+                            <td>
+                                <div style="display: flex; gap: 0.5rem;">
+                                    <button class="action-btn" title="Send Email"><i class="ph ph-envelope-simple"></i></button>
+                                    <button class="action-btn" title="View Details"><i class="ph ph-eye"></i></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </main>
+    </div>
+
+</body>
+</html>
