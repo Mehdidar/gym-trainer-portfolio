@@ -1164,7 +1164,45 @@ section {
         color: rgba(255, 255, 255, 0.1); /* Subtle brand mark at bottom */
     }
 
-    .certs-grid { grid-template-columns: 1fr; }
+    .hero-image, .about-img, .result-card img {
+        filter: grayscale(0%) contrast(1.1);
+        opacity: 1;
+    }
+
+    .services-bento {
+        grid-template-columns: 1fr;
+    }
+
+    .bento-card {
+        padding: 2rem;
+    }
+
+    .results-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .result-card {
+        aspect-ratio: auto;
+        min-height: 400px;
+    }
+
+    .result-info {
+        padding: 1.25rem;
+        bottom: 1rem;
+        left: 1rem;
+        right: 1rem;
+    }
+
+    .certs-grid { 
+        grid-template-columns: 1fr; 
+        gap: 1.5rem;
+    }
+    
+    .cert-card {
+        padding: 1.5rem;
+    }
+    
+    .cert-card:nth-child(2) { margin-top: 0; }
 
     .footer-top { 
         grid-template-columns: 1fr; 
@@ -1191,8 +1229,51 @@ section {
 @media (max-width: 480px) {
     .container { padding: 0 5%; }
     .hero-title { font-size: 2.8rem; }
-    .section-header h2 { font-size: 2.5rem; }
+    .section-header h2 { font-size: 2.2rem; }
     .hero-image-wrapper { height: 350px; }
+    
+    .bento-card {
+        padding: 2rem;
+    }
+    
+    .cert-card {
+        padding: 1.5rem;
+    }
+    
+    .result-card {
+        min-height: 400px;
+    }
+    
+    .result-info {
+        padding: 1rem;
+        bottom: 0.8rem;
+        left: 0.8rem;
+        right: 0.8rem;
+    }
+
+    .result-info h4 {
+        font-size: 1.2rem;
+    }
+
+    .result-info p {
+        font-size: 0.85rem;
+    }
+
+    .result-card {
+        min-height: 450px;
+    }
+    
+    .cert-card {
+        padding: 1.25rem;
+    }
+
+    .cert-image {
+        margin-bottom: 1.5rem;
+    }
+    
+    .cert-card h3 {
+        font-size: 1.2rem;
+    }
 }
 
 /* Hover effect on mouse move code */
@@ -1316,14 +1397,4 @@ section {
     border-color: rgba(255, 74, 28, 0.5);
 }
 
-@media (max-width: 1024px) {
-    .certs-grid { 
-        grid-template-columns: repeat(2, 1fr); 
-        gap: 2rem;
-    }
-    .cert-card:nth-child(2) { margin-top: 0; }
-}
-
-@media (max-width: 768px) {
-    .certs-grid { grid-template-columns: 1fr; }
-}
+/* End of file */

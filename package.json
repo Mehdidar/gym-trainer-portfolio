@@ -4,6 +4,6 @@
   "description": "Portfolio website with Vercel backend integration",
   "dependencies": {
     "resend": "^3.2.0",
-    "@vercel/kv": "^1.0.1"
+    "ioredis": "^5.4.1"
   }
 }
