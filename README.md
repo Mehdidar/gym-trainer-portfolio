@@ -13,7 +13,7 @@ index.html            # Main portfolio page
 shiva_portfolio.html  # Alternate version of the portfolio page
 admin.html            # Lead dashboard (reads /api/leads)
 style.css             # Styles
-*.png / *.jpeg        # Gallery photos and certificates
+*.png / *.jpeg        # Gallery photos and certificates (lowercase, hyphenated names)
 vercel.json           # Vercel routing
 package.json          # Backend dependencies (Resend for email, ioredis for storage)
 ```
